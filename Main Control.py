@@ -55,9 +55,9 @@ def send_telemetry(concentration, oxygen, flag, delay):
         data = str(data).lower()
         CLIENT.publish("v1/devices/me/telemetry", data)
         print(f'Publishing {data} to the v1/devices/me/telemetry on the {DEVICE_NAME}.')
-        sleep(delay)
         CLIENT.loop_stop()
         CLIENT.disconnect()
+    sleep(delay)
 
 
 def main():
