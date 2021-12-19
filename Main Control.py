@@ -29,9 +29,9 @@ def create_clients():
     clients = {}
     for DEVICE_NAME, TOKEN in ACCESS_TOKENS.items():
         client = mqtt.Client(DEVICE_NAME)
-        # client.on_connect = on_connect
-        # client.on_disconnect = on_disconnect
-        # client.on_log = on_log
+        client.on_connect = on_connect
+        client.on_disconnect = on_disconnect
+        client.on_log = on_log
         client.username_pw_set(TOKEN)
 
         clients[DEVICE_NAME] = client
@@ -55,9 +55,9 @@ def send_telemetry(concentration, oxygen, flag, delay):
         data = str(data).lower()
         CLIENT.publish("v1/devices/me/telemetry", data)
         print(f'Publishing {data} to the v1/devices/me/telemetry on the {DEVICE_NAME}.')
+        sleep(3)
         CLIENT.loop_stop()
         CLIENT.disconnect()
-    sleep(delay)
 
 
 def main():
@@ -90,10 +90,10 @@ def main():
         Removal of inergen from the building is {flag_o}\033[0m''')
 
         try:
-            send_telemetry(concentration, oxygen, flag, 1)
+            send_telemetry(concentration, oxygen, flag, 5)
         except KeyboardInterrupt:
             print('\n\033[31mManual completion\033[0m')
-            send_telemetry(5, 21, False, 3)
+            send_telemetry(5, 21, False, 5)
             break
 
 
