@@ -93,6 +93,7 @@ def main():
             send_telemetry(concentration, oxygen, flag, 1)
         except KeyboardInterrupt:
             print('\n\033[31mManual completion\033[0m')
+            send_telemetry(5, 21, False, 3)
             break
 
 
